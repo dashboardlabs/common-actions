@@ -19,6 +19,7 @@ jobs:
         cache: 'npm'
         registry-url: https://npm.pkg.github.com/
         scope: '@dashboardlabs'
+    - run: npm i -g npm@7
     - name: Cache NextJS Build
       uses: actions/cache@v2
       with:
