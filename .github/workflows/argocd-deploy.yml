@@ -2,6 +2,11 @@ name: Deploy to ArgoCD Repo
 
 on:
   workflow_call:
+    inputs:
+      env:
+        required: false
+        default: ''
+        type: string
     secrets:
       GH_APP_ID:
         required: true
@@ -28,7 +33,11 @@ jobs:
       - name: Set Repo Name
         run: echo "REPO_NAME=$(echo "${{ github.repository }}" | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
       - name: Set Version
+        if: inputs.env == ""
         run: echo "VERSION=$(echo "${{ github.ref }}" | grep "develop" > /dev/null && echo "dev" || echo "prod")" >> $GITHUB_ENV
+      - name: Set Version
+        if: inputs.env != ""
+        run: echo "VERSION=$(echo "${{ inputs.env }}")" >> $GITHUB_ENV
       - name: Clone App of Apps Repo
         uses: actions/checkout@v3
         with:
