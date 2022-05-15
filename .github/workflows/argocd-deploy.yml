@@ -33,10 +33,10 @@ jobs:
       - name: Set Repo Name
         run: echo "REPO_NAME=$(echo "${{ github.repository }}" | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
       - name: Set Version
-        if: inputs.env == ""
+        if: inputs.env == ''
         run: echo "VERSION=$(echo "${{ github.ref }}" | grep "develop" > /dev/null && echo "dev" || echo "prod")" >> $GITHUB_ENV
       - name: Set Version
-        if: inputs.env != ""
+        if: inputs.env != ''
         run: echo "VERSION=$(echo "${{ inputs.env }}")" >> $GITHUB_ENV
       - name: Clone App of Apps Repo
         uses: actions/checkout@v3
