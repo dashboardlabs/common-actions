@@ -32,6 +32,8 @@ jobs:
         run: echo "DIGEST=$(cat digest-gar.txt)" >> $GITHUB_ENV
       - name: Set Repo Name
         run: echo "REPO_NAME=$(echo "${{ github.repository }}" | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
+      - name: Set Branch
+        run: echo "BRANCH=$(echo "${{ github.ref }}" | grep "develop" > /dev/null && echo "dev" || echo "prod")" >> $GITHUB_ENV
       - name: Set Version
         if: inputs.env == ''
         run: echo "VERSION=$(echo "${{ github.ref }}" | grep "develop" > /dev/null && echo "dev" || echo "prod")" >> $GITHUB_ENV
@@ -44,7 +46,7 @@ jobs:
           repository: dashboardlabs/infra-argocd-app-of-apps
           token: ${{ steps.token.outputs.token }}
       - name: Dump Image
-        run: echo "asia-southeast1-docker.pkg.dev/dashlabs/${{ env.VERSION }}/${{ env.REPO_NAME }}@${{ env.DIGEST }}" > src/apps/${{ env.REPO_NAME }}/${{ env.VERSION }}/image.txt
+        run: echo "asia-southeast1-docker.pkg.dev/dashlabs/${{ env.BRANCH }}/${{ env.REPO_NAME }}@${{ env.DIGEST }}" > src/apps/${{ env.REPO_NAME }}/${{ env.VERSION }}/image.txt
       - run: git config user.name "Totodile Bot"
       - run: git config user.email "95894620+totodile-bot[bot]@users.noreply.github.com"
       - run: git add .
