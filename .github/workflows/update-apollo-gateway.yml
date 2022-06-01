@@ -37,4 +37,4 @@ jobs:
         scope: '@dashboardlabs'
     - run: npm ci
     - run: npm run build
-    - run: npx -p @dashboardlabs/dashdev dashdev graphql:schema ./dist/src.js | npx -p @apollo/rover rover subgraph publish dashlabs@${{inputs.environment}} --name ${{inputs.service}} --routing-url ${{inputs.endpoint}} --convert --schema -
+    - run: npx -p @dashboardlabs/dashdev dashdev graphql:schema ./dist/src.js | npx -p @apollo/rover rover subgraph publish dashlabsai@${{inputs.environment}} --name ${{inputs.service}} --routing-url ${{inputs.endpoint}} --convert --schema -

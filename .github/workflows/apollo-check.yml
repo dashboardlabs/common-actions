@@ -28,4 +28,4 @@ jobs:
     - run: npm ci
     - run: npm run build
     - run: echo "REPO_NAME=$(echo "${{ github.repository }}" | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
-    - run: npx -p @dashboardlabs/dashdev dashdev graphql:schema ./dist/src.js | npx -p @apollo/rover rover subgraph check dashlabs@develop --name ${{ env.REPO_NAME }} --schema -
+    - run: npx -p @dashboardlabs/dashdev dashdev graphql:schema ./dist/src.js | npx -p @apollo/rover rover subgraph check dashlabsai@develop --name ${{ env.REPO_NAME }} --schema -
