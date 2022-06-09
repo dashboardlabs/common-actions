@@ -1,0 +1,51 @@
+name: NPM Clean Code
+
+on:
+  workflow_call:
+    secrets:
+      NODE_AUTH_TOKEN:
+        required: true
+
+jobs:
+  eslint:
+    name: eslint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          cache: "npm"
+          registry-url: https://npm.pkg.github.com/
+          scope: "@dashboardlabs"
+      - name: Install NodeJS Dependencies
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+      - name: Run eslint
+        run: node_modules/.bin/eslint . --max-warnings 10 --ext .js,.jsx,.ts,.tsx
+  prettier:
+    name: prettier
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          cache: "npm"
+          registry-url: https://npm.pkg.github.com/
+          scope: "@dashboardlabs"
+      - name: Install NodeJS Dependencies
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+      - name: Run prettier
+        run: node_modules/.bin/prettier -c .
