@@ -78,8 +78,7 @@ jobs:
         context: .
         push: true
         tags: asia-southeast1-docker.pkg.dev/dashlabs/${{ env.VERSION }}/${{ env.REPO_NAME }}:latest
-        build-args: |
-          NPM_TOKEN="${{ secrets.NODE_AUTH_TOKEN }}"
+        build-args: NPM_TOKEN=${{ secrets.NODE_AUTH_TOKEN }}
 
     - name: Save Docker Digest
       run: echo "${{ steps.build-docker-image.outputs.digest }}" > digest-gar.txt
